@@ -343,12 +343,6 @@
 				$('#content').html(html);
 				showLoggedInMenu();
 			})
-		 
-			// show login page on error
-			.fail(function(result) {
-				showLoginPage();
-				$('#response').html("<div class='alert alert-danger'>Please login to access the docs page.</div>");
-			});
 		}
 		 
 		// get or read cookie
@@ -414,12 +408,6 @@
 				clearResponse();
 				$('#content').html(html);
 			})
-		 
-			// on error/fail, tell the user he needs to login to show the account page
-			.fail(function(result) {
-				showLoginPage();
-				$('#response').html("<div class='alert alert-danger'>Please login to access the account page.</div>");
-			});
 		}
 		 
 		// function to make form values to json format
