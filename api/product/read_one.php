@@ -6,7 +6,6 @@ header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
   
-
 include_once '../config/database.php';
 include_once '../objects/product.php';
 
@@ -16,7 +15,8 @@ $db = $database->getConnection();
 $product = new Product($db);
 
 $product->id = isset($_GET['id']) ? $_GET['id'] : die();
-	
+
+// read the details of product to be edited	
 $product->readOne();
 
 if ($product->name != null) {
@@ -45,4 +45,3 @@ else {
 	// tell the user product does not exist
 	echo json_encode(array("message" => "Product does not exist."));
 }
-?>
