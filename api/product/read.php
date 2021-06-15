@@ -14,7 +14,7 @@ $product = new Product($db);
 $stmt = $product->read();
 $num = $stmt->rowCount();
 
-if($num>0){
+if ($num>0) {
   
 	// products array
 	$products_arr=array();
