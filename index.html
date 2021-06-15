@@ -16,13 +16,13 @@
  
 <!-- navbar -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-	<a class="navbar-brand" href="#">Navbar</a>
+	<a class="navbar-brand isDisabled" href="#">YourPI</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
-			<a class="nav-item nav-link" href="#" id='home'>Home</a>
+			<a class="nav-item nav-link" href="#" id='home'>Docs</a>
 			<a class="nav-item nav-link" href="#" id='update_account'>Account</a>
 			<a class="nav-item nav-link" href="#" id='logout'>Logout</a>
 			<a class="nav-item nav-link" href="#" id='login'>Login</a>
@@ -56,9 +56,45 @@
  
 <script>
 	// jQuery codes
-	$(document).ready(function(){
+	$(document).ready(function() {
+		
+		function getCookie(name) {
+			var dc = document.cookie;
+			var prefix = name + "=";
+			var begin = dc.indexOf("; " + prefix);
+			if (begin == -1) {
+				begin = dc.indexOf(prefix);
+				if (begin != 0) return null;
+			}
+			else
+			{
+				begin += 2;
+				var end = document.cookie.indexOf(";", begin);
+				if (end == -1) {
+				end = dc.length;
+				}
+			}
+			// because unescape has been deprecated, replaced with decodeURI
+			//return unescape(dc.substring(begin + prefix.length, end));
+			return decodeURI(dc.substring(begin + prefix.length, end));
+		} 
+		
+		function doSomething() {
+			var myCookie = getCookie("jwt");
+		
+			if (!myCookie) {
+				showLoggedOutMenu();
+			}
+			else {
+				showLoggedInMenu();
+			}
+		}
+		
+		doSomething();
+		showHomePage();
+		
 		// show sign up / registration form
-		$(document).on('click', '#sign_up', function(){
+		$(document).on('click', '#sign_up', function() {
 	 
 			var html = `
 				<h2>Sign Up</h2>
@@ -92,8 +128,7 @@
 		});
 	 
 		// trigger when registration form is submitted
-		$(document).on('submit', '#sign_up_form', function(){
-		 
+		$(document).on('submit', '#sign_up_form', function() {
 			// get form data
 			var sign_up_form=$(this);
 			var form_data=JSON.stringify(sign_up_form.serializeObject());
@@ -119,12 +154,12 @@
 		});
 	 
 		// show login form
-		$(document).on('click', '#login', function(){
+		$(document).on('click', '#login', function() {
 			showLoginPage();
 		});
 		 
 		// trigger when login form is submitted
-		$(document).on('submit', '#login_form', function(){
+		$(document).on('submit', '#login_form', function() {
 		 
 			// get form data
 			var login_form=$(this);
@@ -146,7 +181,7 @@
 					$('#response').html("<div class='alert alert-success'>Successful login.</div>");
 			 
 				},
-				error: function(xhr, resp, text){
+				error: function(xhr, resp, text) {
 					// on error, tell the user login has failed & empty the input boxes
 					$('#response').html("<div class='alert alert-danger'>Login failed. Email or password is incorrect.</div>");
 					login_form.find('input').val('');
@@ -157,22 +192,22 @@
 		});
 		 
 		// show home page
-		$(document).on('click', '#home', function(){
+		$(document).on('click', '#home', function() {
 			showHomePage();
 			clearResponse();
 		});
 		 
 		// show update account form
-		$(document).on('click', '#update_account', function(){
+		$(document).on('click', '#update_account', function() {
 			showUpdateAccountForm();
 		});
 		 
 		// trigger when 'update account' form is submitted
-		$(document).on('submit', '#update_account_form', function(){
+		$(document).on('submit', '#update_account_form', function() {
 		 
 			// handle for update_account_form
 			var update_account_form=$(this);
-		 
+
 			// validate jwt to verify access
 			var jwt = getCookie('jwt');
 		 
@@ -202,11 +237,11 @@
 			 
 				// show error message to user
 				error: function(xhr, resp, text){
-					if(xhr.responseJSON.message=="Unable to update user."){
+					if(xhr.responseJSON.message=="Unable to update user.") {
 						$('#response').html("<div class='alert alert-danger'>Unable to update account.</div>");
 					}
 				 
-					else if(xhr.responseJSON.message=="Access denied."){
+					else if(xhr.responseJSON.message=="Access denied.") {
 						showLoginPage();
 						$('#response').html("<div class='alert alert-success'>Access denied. Please login</div>");
 					}
@@ -217,18 +252,18 @@
 		});
 		 
 		// logout the user
-		$(document).on('click', '#logout', function(){
+		$(document).on('click', '#logout', function() {
 			showLoginPage();
 			$('#response').html("<div class='alert alert-info'>You are logged out.</div>");
 		});
 	 
 		// remove any prompt messages
-		function clearResponse(){
+		function clearResponse() {
 			$('#response').html('');
 		}
 		 
 		// show login page
-		function showLoginPage(){
+		function showLoginPage() {
 		 
 			// remove jwt
 			setCookie("jwt", "", 1);
@@ -265,14 +300,14 @@
 		}
 		 
 		// if the user is logged out
-		function showLoggedOutMenu(){
+		function showLoggedOutMenu() {
 			// show login and sign up from navbar & hide logout button
 			$("#login, #sign_up").show();
 			$("#logout").hide();
 		}
 		 
 		// show home page
-		function showHomePage(){
+		function showHomePage() {
 		 
 			// validate jwt to verify access
 			var jwt = getCookie('jwt');
@@ -281,10 +316,26 @@
 				// if valid, show homepage
 				var html = `
 					<div class="card">
-						<div class="card-header">Welcome to Home!</div>
+						<div class="card-header">Welcome to YourPI!</div>
 						<div class="card-body">
 							<h5 class="card-title">You are logged in.</h5>
 							<p class="card-text">You won't be able to access the home and account pages if you are not logged in.</p>
+						</div>
+					</div>
+					<div style="height: 30px;"></div>
+					<div class="card">
+						<div class="card-header">Introduction</div>
+						<div class="card-body">
+							<h5 class="card-title">An unofficial take on the YourPI.</h5>
+							<p class="card-text">This api serves as a construction kit.</p>
+							<p>The repository can be found on <a href="https://github.com/antar/REST-API">Github</a>. By default there are products and categories. These can be modified with CRUD.</p>
+							<p>The User Authentication is made with <a href="https://github.com/firebase/php-jwt">JWT.</a></p>
+						</div>
+					</div>
+					<div style="height: 30px;"></div>
+					<div class="card">
+						<div class="card-header">Usage</div>
+						<div class="card-body">
 						</div>
 					</div>
 					`;
@@ -294,14 +345,14 @@
 			})
 		 
 			// show login page on error
-			.fail(function(result){
+			.fail(function(result) {
 				showLoginPage();
-				$('#response').html("<div class='alert alert-danger'>Please login to access the home page.</div>");
+				$('#response').html("<div class='alert alert-danger'>Please login to access the docs page.</div>");
 			});
 		}
 		 
 		// get or read cookie
-		function getCookie(cname){
+		function getCookie(cname) {
 			var name = cname + "=";
 			var decodedCookie = decodeURIComponent(document.cookie);
 			var ca = decodedCookie.split(';');
@@ -319,13 +370,13 @@
 		}
 		 
 		// if the user is logged in
-		function showLoggedInMenu(){
+		function showLoggedInMenu() {
 			// hide login and sign up from navbar & show logout button
 			$("#login, #sign_up").hide();
 			$("#logout").show();
 		}
 		 
-		function showUpdateAccountForm(){
+		function showUpdateAccountForm() {
 			// validate jwt to verify access
 			var jwt = getCookie('jwt');
 			$.post("api/user/validate_token.php", JSON.stringify({ jwt:jwt })).done(function(result) {
@@ -365,14 +416,14 @@
 			})
 		 
 			// on error/fail, tell the user he needs to login to show the account page
-			.fail(function(result){
+			.fail(function(result) {
 				showLoginPage();
 				$('#response').html("<div class='alert alert-danger'>Please login to access the account page.</div>");
 			});
 		}
 		 
 		// function to make form values to json format
-		$.fn.serializeObject = function(){
+		$.fn.serializeObject = function() {
 		 
 			var o = {};
 			var a = this.serializeArray();
