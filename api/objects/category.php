@@ -22,13 +22,13 @@ class Category {
 				ORDER BY
 					name";
   
-		$stmt = $this->conn->prepare( $query );
+		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
   
 		return $stmt;
 	}
 	
-	public function read(){
+	public function read() {
 	  
 		//select all data
 		$query = "SELECT
@@ -38,7 +38,7 @@ class Category {
 				ORDER BY
 					name";
 	  
-		$stmt = $this->conn->prepare( $query );
+		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
 	  
 		return $stmt;

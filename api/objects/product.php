@@ -52,11 +52,11 @@ class Product {
 		$stmt = $this->conn->prepare($query);
 	  
 		// sanitize
-		$this->name=htmlspecialchars(strip_tags($this->name));
-		$this->price=htmlspecialchars(strip_tags($this->price));
-		$this->description=htmlspecialchars(strip_tags($this->description));
-		$this->category_id=htmlspecialchars(strip_tags($this->category_id));
-		$this->created=htmlspecialchars(strip_tags($this->created));
+		$this->name = htmlspecialchars(strip_tags($this->name));
+		$this->price = htmlspecialchars(strip_tags($this->price));
+		$this->description = htmlspecialchars(strip_tags($this->description));
+		$this->category_id = htmlspecialchars(strip_tags($this->category_id));
+		$this->created = htmlspecialchars(strip_tags($this->created));
 	  
 		// bind values
 		$stmt->bindParam(":name", $this->name);
@@ -90,7 +90,7 @@ class Product {
 					0,1";
 	  
 		// prepare query statement
-		$stmt = $this->conn->prepare( $query );
+		$stmt = $this->conn->prepare($query);
 	  
 		// bind id of product to be updated
 		$stmt->bindParam(1, $this->id);
@@ -127,11 +127,11 @@ class Product {
 		$stmt = $this->conn->prepare($query);
 	  
 		// sanitize
-		$this->name=htmlspecialchars(strip_tags($this->name));
-		$this->price=htmlspecialchars(strip_tags($this->price));
-		$this->description=htmlspecialchars(strip_tags($this->description));
-		$this->category_id=htmlspecialchars(strip_tags($this->category_id));
-		$this->id=htmlspecialchars(strip_tags($this->id));
+		$this->name = htmlspecialchars(strip_tags($this->name));
+		$this->price = htmlspecialchars(strip_tags($this->price));
+		$this->description = htmlspecialchars(strip_tags($this->description));
+		$this->category_id = htmlspecialchars(strip_tags($this->category_id));
+		$this->id = htmlspecialchars(strip_tags($this->id));
 	  
 		// bind new values
 		$stmt->bindParam(':name', $this->name);
@@ -191,7 +191,7 @@ class Product {
 		$stmt = $this->conn->prepare($query);
 	  
 		// sanitize
-		$keywords=htmlspecialchars(strip_tags($keywords));
+		$keywords = htmlspecialchars(strip_tags($keywords));
 		$keywords = "%{$keywords}%";
 	  
 		// bind

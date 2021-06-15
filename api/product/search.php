@@ -2,7 +2,8 @@
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-  
+
+include_once '../config/core.php';  
 include_once '../config/database.php';
 include_once '../objects/product.php';
   
@@ -11,7 +12,7 @@ $db = $database->getConnection();
   
 $product = new Product($db);
   
-$keywords=isset($_GET["s"]) ? $_GET["s"] : "";
+$keywords = isset($_GET["s"]) ? $_GET["s"] : "";
   
 // query products
 $stmt = $product->search($keywords);
@@ -21,8 +22,8 @@ $num = $stmt->rowCount();
 if ($num > 0) {
   
 	// products array
-	$products_arr=array();
-	$products_arr["records"]=array();
+	$products_arr = array();
+	$products_arr["records"] = array();
   
 	// retrieve our table contents
 	// fetch() is faster than fetchAll()
