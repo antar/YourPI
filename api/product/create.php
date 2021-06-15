@@ -18,12 +18,7 @@ $product = new Product($db);
 $data = json_decode(file_get_contents("php://input"));
   
 // make sure data is not empty
-if (
-	!empty($data->name) &&
-	!empty($data->price) &&
-	!empty($data->description) &&
-	!empty($data->category_id)
-) {
+if (!empty($data->name) && !empty($data->price) && !empty($data->description) && !empty($data->category_id)) {
   
 	// set product property values
 	$product->name = $data->name;
