@@ -1,9 +1,21 @@
-body { padding-top: 5rem; }
-.starter-template { padding: 3rem 1.5rem; }
-#logout{ display:none; }
+body { 
+	padding-top: 5rem; 
+}
+
+.starter-template { 
+	padding: 3rem 1.5rem; 
+}
+
+#logout { 
+	display:none; 
+}
+
 .isDisabled {
-	  color: currentColor;
-	  cursor: default;
-	  opacity: 0.5;
-	  text-decoration: none;
-	}
+	color: currentColor;
+	cursor: default;
+	opacity: 0.5;
+	text-decoration: none;
+}
+.card-body img {
+	width: 100%;	
+}
