@@ -19,3 +19,7 @@ body {
 .card-body img {
 	width: 100%;	
 }
+
+.navbar-dark .navbar-nav .nav-link {
+	color: rgba(255,255,255,.5) !important;
+}
