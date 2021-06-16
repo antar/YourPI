@@ -11,9 +11,7 @@ import store from "../redux/store";
 export default function Header() {
   const history = useHistory();
 
-  const isLoggedIn = useSelector<RootState, AuthState["isLoggedIn"]>(
-    (state) => state.auth.isLoggedIn
-  );
+  const authState = useSelector<RootState, AuthState>((state) => state.auth);
 
   const handleLogout = () => {
     store.dispatch({ type: "SET_TOKEN", payload: undefined });
@@ -27,7 +25,7 @@ export default function Header() {
           <Navbar.Brand>YourPI</Navbar.Brand>
         </LinkContainer>
         <Nav className="me-auto">
-          {isLoggedIn ? (
+          {authState.user ? (
             <>
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             </>

@@ -1,18 +1,23 @@
-import { setToken } from "../../lib/api";
+import { introspect, setToken } from "../../lib/api";
+import { IUser } from "../../lib/types";
+import store from "../store";
 
 export interface AuthState {
   token?: string;
-  isLoggedIn: boolean;
+  isLoading: boolean;
+  user?: IUser;
 }
 
 const initialToken = localStorage.getItem("token") || undefined;
 
 const initialState: AuthState = {
   token: initialToken,
-  isLoggedIn: Boolean(initialToken)
+  isLoading: Boolean(initialToken)
 };
 
-type AuthReducerAction = { type: "SET_TOKEN"; payload?: string };
+type AuthReducerAction =
+  | { type: "SET_TOKEN"; payload?: string }
+  | { type: "SET_USER"; payload?: IUser };
 
 export default function authReducer(
   state = initialState,
@@ -26,9 +31,18 @@ export default function authReducer(
       return {
         ...state,
         token: action.payload,
-        isLoggedIn: Boolean(action.payload)
+        user: action.payload ? state.user : undefined
       };
+    case "SET_USER":
+      return { ...state, isLoading: false, user: action.payload };
     default:
       return state;
   }
 }
+
+setTimeout(async () => {
+  if (initialToken) {
+    const auth = await introspect();
+    store.dispatch({ type: "SET_USER", payload: auth.data });
+  }
+});

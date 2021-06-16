@@ -7,11 +7,9 @@ import { RootState } from "../redux/reducers/rootReducer";
 export default function useAuthTenet() {
   const history = useHistory();
 
-  const isLoggedIn = useSelector<RootState, AuthState["isLoggedIn"]>(
-    (state) => state.auth.isLoggedIn
-  );
+  const authState = useSelector<RootState, AuthState>((state) => state.auth);
 
   useEffect(() => {
-    if (isLoggedIn) history.push("/");
-  }, [isLoggedIn, history]);
+    if (!authState.isLoading && authState.user) history.push("/");
+  }, [authState, history]);
 }
