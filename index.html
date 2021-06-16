@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -314,22 +315,62 @@
 					</div>
 					<div style="height: 30px;"></div>
 					<div class="card">
+						<div class="card-header">Information</div>
+							<div class="card-body">
+								<h5 class="card-title">For all calls you have to use the POST Method</h5>
+							</div>
+						</div>
+					</div>
+					<div style="height: 30px;"></div>
+					<div class="card">
 						<div class="card-header">Usage <b>Users</b></div>
 							<div class="card-body">
 								<h5 class="card-title">Create User</h5>
-								<img src="images/create-user.png">
+								<code>https://api.wes.fm/api/user/create_user.php</code>
+								<br>
+								<code>
+									{
+										 "firstname" : "string",
+										 "lastname" : "string",
+										 "email" : "string",
+										 "password" : "string"
+									} 
+								</code>
 							</div>
 							<div class="card-body">
 								<h5 class="card-title">Login User</h5>
-								<img src="images/login-user.png">
+								<code>https://api.wes.fm/api/user/login.php</code>
+								<br>
+								<code>
+								{
+									 "email" : "string",
+									 "password" : "string"
+								} 
+								</code>
 							</div>
 							<div class="card-body">
 								<h5 class="card-title">Validate Token</h5>
-								<img src="images/validate-token.png">
+								<code>https://api.wes.fm/api/user/validate_token.php</code>
+								<br>
+								<code>
+								{
+								 "jwt" : "string"
+								} 
+								</code>
 							</div>
 							<div class="card-body">
-								<h5 class="card-title">Read One Product</h5>
-								<img src="images/update-user.png">
+								<h5 class="card-title">Update User</h5>
+								<code>https://api.wes.fm/api/user/update_user.php</code>
+								<br>
+								<code>
+								{
+									 "firstname" : "string",
+									 "lastname" : "string",
+									 "email" : "string",
+									 "password" : string"",
+									 "jwt" : "string"								 
+								}
+								</code>
 							</div>
 						</div>
 					</div>
@@ -338,39 +379,63 @@
 						<div class="card-header">Usage <b>Products / Categories</b></div>
 							<div class="card-body">
 								<h5 class="card-title">Read Products</h5>
-								<img src="images/read-products-200.jpeg">
-							</div>
-							<div class="card-body">
-								<h5 class="card-title">Read Products</h5>
-								<img src="images/read-products-200.jpeg">
-							</div>
-							<div class="card-body">
-								<h5 class="card-title">Create Product</h5>
-								<img src="images/create-product-201.jpeg">
-							</div>
-							<div class="card-body">
-								<h5 class="card-title">Read One Product</h5>
-								<img src="images/read-one-200.jpeg">
-							</div>
-							<div class="card-body">
-								<h5 class="card-title">Update Product</h5>
-								<img src="images/update-product-200.jpeg">
-							</div>
-							<div class="card-body">
-								<h5 class="card-title">Delete Product</h5>
-								<img src="images/delete-200.jpeg">
-							</div>
-							<div class="card-body">
-								<h5 class="card-title">Search Products</h5>
-								<img src="images/search-200.jpeg">
-							</div>
-							<div class="card-body">
-								<h5 class="card-title">Paginate Products</h5>
-								<img src="images/read-paging-200.jpeg">
+								<code>https://api.wes.fm/api/product/read.php</code>
 							</div>
 							<div class="card-body">
 								<h5 class="card-title">Read Categories</h5>
-								<img src="images/read-categories-200.jpeg">
+								<code>https://api.wes.fm/api/category/read.php</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Create Product</h5>
+								<code>https://api.wes.fm/api/product/create.php</code>
+								<br>
+								<code>
+								{
+									"name" : "string",
+									"price" : "string",
+									"description" : "string",
+									"category_id" : int,
+									"created" : "string"
+								}
+								</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Read One Product</h5>
+								<code>https://api.wes.fm/api/product/read_one?id=int.php</code>
+								<br>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Update Product</h5>
+								<code>https://api.wes.fm/api/product/update.php</code>
+								<br>
+								<code>
+								{	
+									"id" : "string",
+									"name" : "string",
+									"price" : "string",
+									"description" : "string",
+									"category_id" : int,
+									"created" : "string"
+								}
+								</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Delete Product</h5>
+								<code>https://api.wes.fm/api/product/delete.php</code>
+								<br>
+								<code>
+								{	
+									"id" : "string"
+								}
+								</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Search Products</h5>
+								<code>https://api.wes.fm/api/product/search.php?s=value</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Paginate Products</h5>
+								<code>https://api.wes.fm/api/product/read_paging.php</code>
 							</div>
 						</div>
 					</div>
