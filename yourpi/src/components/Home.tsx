@@ -1,16 +1,25 @@
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
+import { useSelector } from "react-redux";
 import useAuthProtecton from "../hooks/useAuthProtection";
+import { AuthState } from "../redux/reducers/authReducer";
+import { RootState } from "../redux/reducers/rootReducer";
 
 export default function Home() {
   useAuthProtecton();
+
+  const user = useSelector<RootState, AuthState["user"]>(
+    (state) => state.auth.user
+  );
 
   return (
     <Container className="py-5">
       <Card className="mb-4">
         <Card.Header>Welcome to YourPI!</Card.Header>
         <Card.Body>
-          <Card.Title>You are logged in.</Card.Title>
+          <Card.Title>
+            You are logged in as {user?.firstname} {user?.lastname}.
+          </Card.Title>
           <Card.Text>
             You won’t be able to access the home and account pages if you are
             not logged in.
