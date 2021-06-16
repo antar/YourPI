@@ -1,4 +1,5 @@
 <?php
+
 class Category {
   
 	private $conn;
@@ -10,11 +11,12 @@ class Category {
 	public $created;
   
 	public function __construct($db) {
+		
 		$this->conn = $db;
 	}
   
 	public function readAll() {
-		//select all data
+
 		$query = "SELECT
 					id, name, description
 				FROM
@@ -30,7 +32,6 @@ class Category {
 	
 	public function read() {
 	  
-		//select all data
 		$query = "SELECT
 					id, name, description
 				FROM
@@ -41,7 +42,6 @@ class Category {
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
 	  
-		return $stmt;
-		
+		return $stmt;	
 	}
 }

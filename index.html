@@ -1,21 +1,21 @@
+
 <!doctype html>
 <html lang="en">
 	<head>
-		<!-- Required meta tags -->
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
  
 		<title>Rest API Authentication Example</title>
  
-		<!-- Bootstrap 4 CSS and custom CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 		<link rel="stylesheet" type="text/css" href="styles/custom.css" />
+		<link rel="icon" type="image/png" href="images/fav.png"/>
  
 	</head>
 <body>
  
-<!-- navbar -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+	<img src="images/fav.png" style="height: 30px; margin-right: 10px;">
 	<a class="navbar-brand isDisabled" href="#">YourPI</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -30,35 +30,28 @@
 		</div>
 	</div>
 </nav>
-<!-- /navbar -->
  
-<!-- container -->
 <main role="main" class="container starter-template">
  
 	<div class="row">
 		<div class="col">
  
-			<!-- where prompt / messages will appear -->
 			<div id="response"></div>
  
-			<!-- where main content will appear -->
 			<div id="content"></div>
 		</div>
 	</div>
  
 </main>
-<!-- /container -->
  
-<!-- jQuery & Bootstrap 4 JavaScript libraries -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
  
 <script>
-	// jQuery codes
 	$(document).ready(function() {
 		
-		function getCookie(name) {
+		function getCookieStart(name) {
 			var dc = document.cookie;
 			var prefix = name + "=";
 			var begin = dc.indexOf("; " + prefix);
@@ -74,26 +67,27 @@
 				end = dc.length;
 				}
 			}
-			// because unescape has been deprecated, replaced with decodeURI
-			//return unescape(dc.substring(begin + prefix.length, end));
+
 			return decodeURI(dc.substring(begin + prefix.length, end));
 		} 
 		
 		function doSomething() {
-			var myCookie = getCookie("jwt");
+			
+			var myCookie = getCookieStart("jwt");
 		
 			if (!myCookie) {
 				showLoggedOutMenu();
+				showLoginPage();
+				
 			}
 			else {
 				showLoggedInMenu();
+				showHomePage();
 			}
 		}
 		
 		doSomething();
-		showHomePage();
 		
-		// show sign up / registration form
 		$(document).on('click', '#sign_up', function() {
 	 
 			var html = `
@@ -127,25 +121,21 @@
 			$('#content').html(html);
 		});
 	 
-		// trigger when registration form is submitted
 		$(document).on('submit', '#sign_up_form', function() {
-			// get form data
+
 			var sign_up_form=$(this);
 			var form_data=JSON.stringify(sign_up_form.serializeObject());
 		 
-			// submit form data to api
 			$.ajax({
 				url: "api/user/create_user.php",
 				type : "POST",
 				contentType : 'application/json',
 				data : form_data,
 				success : function(result) {
-					// if response is a success, tell the user it was a successful sign up & empty the input boxes
 					$('#response').html("<div class='alert alert-success'>Successful sign up. Please login.</div>");
 					sign_up_form.find('input').val('');
 				},
 				error: function(xhr, resp, text){
-					// on error, tell the user sign up failed
 					$('#response').html("<div class='alert alert-danger'>Unable to sign up. Please contact admin.</div>");
 				}
 			});
@@ -153,19 +143,16 @@
 			return false;
 		});
 	 
-		// show login form
 		$(document).on('click', '#login', function() {
+			
 			showLoginPage();
 		});
 		 
-		// trigger when login form is submitted
 		$(document).on('submit', '#login_form', function() {
 		 
-			// get form data
-			var login_form=$(this);
-			var form_data=JSON.stringify(login_form.serializeObject());
+			var login_form = $(this);
+			var form_data = JSON.stringify(login_form.serializeObject());
 		 
-			// submit form data to api
 			$.ajax({
 				url: "api/user/login.php",
 				type : "POST",
@@ -173,16 +160,13 @@
 				data : form_data,
 				success : function(result){
 			 
-					// store jwt to cookie
 					setCookie("jwt", result.jwt, 1);
-			 
-					// show home page & tell the user it was a successful login
+
 					showHomePage();
 					$('#response').html("<div class='alert alert-success'>Successful login.</div>");
 			 
 				},
 				error: function(xhr, resp, text) {
-					// on error, tell the user login has failed & empty the input boxes
 					$('#response').html("<div class='alert alert-danger'>Login failed. Email or password is incorrect.</div>");
 					login_form.find('input').val('');
 				}
@@ -191,36 +175,29 @@
 			return false;
 		});
 		 
-		// show home page
 		$(document).on('click', '#home', function() {
+			
 			showHomePage();
 			clearResponse();
 		});
 		 
-		// show update account form
 		$(document).on('click', '#update_account', function() {
+			
 			showUpdateAccountForm();
 		});
 		 
-		// trigger when 'update account' form is submitted
 		$(document).on('submit', '#update_account_form', function() {
 		 
-			// handle for update_account_form
 			var update_account_form=$(this);
 
-			// validate jwt to verify access
 			var jwt = getCookie('jwt');
 		 
-			// get form data
 			var update_account_form_obj = update_account_form.serializeObject()
 			 
-			// add jwt on the object
 			update_account_form_obj.jwt = jwt;
 			 
-			// convert object to json string
 			var form_data=JSON.stringify(update_account_form_obj);
 			 
-			// submit form data to api
 			$.ajax({
 				url: "api/user/update_user.php",
 				type : "POST",
@@ -228,14 +205,11 @@
 				data : form_data,
 				success : function(result) {
 			 
-					// tell the user account was updated
 					$('#response').html("<div class='alert alert-success'>Account was updated.</div>");
 			 
-					// store new jwt to coookie
 					setCookie("jwt", result.jwt, 1);
 				},
 			 
-				// show error message to user
 				error: function(xhr, resp, text){
 					if(xhr.responseJSON.message=="Unable to update user.") {
 						$('#response').html("<div class='alert alert-danger'>Unable to update account.</div>");
@@ -251,24 +225,21 @@
 			return false;
 		});
 		 
-		// logout the user
 		$(document).on('click', '#logout', function() {
+			
 			showLoginPage();
 			$('#response').html("<div class='alert alert-info'>You are logged out.</div>");
 		});
 	 
-		// remove any prompt messages
 		function clearResponse() {
+			
 			$('#response').html('');
 		}
 		 
-		// show login page
 		function showLoginPage() {
 		 
-			// remove jwt
 			setCookie("jwt", "", 1);
 		 
-			// login page html
 			var html = `
 				<h2>Login</h2>
 				<form id='login_form'>
@@ -291,51 +262,181 @@
 			showLoggedOutMenu();
 		}
 		 
-		// function to set cookie
 		function setCookie(cname, cvalue, exdays) {
+			
 			var d = new Date();
 			d.setTime(d.getTime() + (exdays*24*60*60*1000));
 			var expires = "expires="+ d.toUTCString();
 			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 		}
 		 
-		// if the user is logged out
 		function showLoggedOutMenu() {
-			// show login and sign up from navbar & hide logout button
+			
 			$("#login, #sign_up").show();
 			$("#home, #logout, #update_account").hide();
 		}
 		 
-		// show home page
 		function showHomePage() {
 		 
-			// validate jwt to verify access
 			var jwt = getCookie('jwt');
 			$.post("api/user/validate_token.php", JSON.stringify({ jwt:jwt })).done(function(result) {
 		 
-				// if valid, show homepage
 				var html = `
 					<div class="card">
 						<div class="card-header">Welcome to YourPI!</div>
-						<div class="card-body">
-							<h5 class="card-title">You are logged in.</h5>
-							<p class="card-text">You won't be able to access the home and account pages if you are not logged in.</p>
+							<div class="card-body">
+								<h5 class="card-title">You are logged in.</h5>
+								<p class="card-text">You won't be able to access the home and account pages if you are not logged in.</p>
+							</div>
 						</div>
 					</div>
 					<div style="height: 30px;"></div>
 					<div class="card">
 						<div class="card-header">Introduction</div>
-						<div class="card-body">
-							<h5 class="card-title">An unofficial take on the YourPI.</h5>
-							<p class="card-text">This api serves as a construction kit.</p>
-							<p>The repository can be found on <a href="https://github.com/antar/REST-API">Github</a>. By default there are products and categories. These can be modified with CRUD.</p>
-							<p>The User Authentication is made with <a href="https://github.com/firebase/php-jwt">JWT.</a></p>
+							<div class="card-body">
+								<h5 class="card-title">An unofficial take on the YourPI.</h5>
+								<p class="card-text">This api serves as a construction kit.</p>
+								<p class="card-text"><b>Watch Out: </b>You don't have to verify yourself with a token to access the API. The user interface and the products / categories are <b>not</b> related.</p>
+								<p>The repository can be found on <a href="https://github.com/antar/REST-API">Github</a>. By default there are products and categories. These can be modified with CRUD.</p>
+								<p>The User Authentication is made with <a href="https://github.com/firebase/php-jwt">JWT.</a></p>
+							</div>
 						</div>
 					</div>
 					<div style="height: 30px;"></div>
 					<div class="card">
-						<div class="card-header">Usage</div>
-						<div class="card-body">
+						<div class="card-header">Getting Started</div>
+							<div class="card-body">
+								<h5 class="card-title">Database</h5>
+								<p>Create a new Database called <b>api_db</b>.</p>
+								<p>Import each of the Importer Files at <b>/sql</b> to the Database.</p>
+								<p>Change the credentials in <b>/api/config/database.php</b> with your informations.</p>
+							</div>
+						</div>
+					</div>
+					<div style="height: 30px;"></div>
+					<div class="card">
+						<div class="card-header">Information</div>
+							<div class="card-body">
+								<h5 class="card-title">For all calls you have to use the POST Method</h5>
+							</div>
+						</div>
+					</div>
+					<div style="height: 30px;"></div>
+					<div class="card">
+						<div class="card-header">Usage <b>Users</b></div>
+							<div class="card-body">
+								<h5 class="card-title">Create User</h5>
+								<code>https://api.wes.fm/api/user/create_user.php</code>
+								<br>
+								<code>
+									{
+										 "firstname" : "string",
+										 "lastname" : "string",
+										 "email" : "string",
+										 "password" : "string"
+									} 
+								</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Login User</h5>
+								<code>https://api.wes.fm/api/user/login.php</code>
+								<br>
+								<code>
+								{
+									 "email" : "string",
+									 "password" : "string"
+								} 
+								</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Validate Token</h5>
+								<code>https://api.wes.fm/api/user/validate_token.php</code>
+								<br>
+								<code>
+								{
+								 "jwt" : "string"
+								} 
+								</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Update User</h5>
+								<code>https://api.wes.fm/api/user/update_user.php</code>
+								<br>
+								<code>
+								{
+									 "firstname" : "string",
+									 "lastname" : "string",
+									 "email" : "string",
+									 "password" : string"",
+									 "jwt" : "string"								 
+								}
+								</code>
+							</div>
+						</div>
+					</div>
+					<div style="height: 30px;"></div>
+					<div class="card">
+						<div class="card-header">Usage <b>Products / Categories</b></div>
+							<div class="card-body">
+								<h5 class="card-title">Read Products</h5>
+								<code>https://api.wes.fm/api/product/read.php</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Read Categories</h5>
+								<code>https://api.wes.fm/api/category/read.php</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Create Product</h5>
+								<code>https://api.wes.fm/api/product/create.php</code>
+								<br>
+								<code>
+								{
+									"name" : "string",
+									"price" : "string",
+									"description" : "string",
+									"category_id" : int,
+									"created" : "string"
+								}
+								</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Read One Product</h5>
+								<code>https://api.wes.fm/api/product/read_one?id=int.php</code>
+								<br>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Update Product</h5>
+								<code>https://api.wes.fm/api/product/update.php</code>
+								<br>
+								<code>
+								{	
+									"id" : "string",
+									"name" : "string",
+									"price" : "string",
+									"description" : "string",
+									"category_id" : int,
+									"created" : "string"
+								}
+								</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Delete Product</h5>
+								<code>https://api.wes.fm/api/product/delete.php</code>
+								<br>
+								<code>
+								{	
+									"id" : "string"
+								}
+								</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Search Products</h5>
+								<code>https://api.wes.fm/api/product/search.php?s=value</code>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Paginate Products</h5>
+								<code>https://api.wes.fm/api/product/read_paging.php</code>
+							</div>
 						</div>
 					</div>
 					`;
@@ -345,7 +446,6 @@
 			})
 		}
 		 
-		// get or read cookie
 		function getCookie(cname) {
 			var name = cname + "=";
 			var decodedCookie = decodeURIComponent(document.cookie);
@@ -363,19 +463,17 @@
 			return "";
 		}
 		 
-		// if the user is logged in
 		function showLoggedInMenu() {
-			// hide login and sign up from navbar & show logout button
+
 			$("#login, #sign_up").hide();
 			$("#home, #logout, #update_account").show();
 		}
 		 
 		function showUpdateAccountForm() {
-			// validate jwt to verify access
+
 			var jwt = getCookie('jwt');
 			$.post("api/user/validate_token.php", JSON.stringify({ jwt:jwt })).done(function(result) {
 		 
-				// if response is valid, put user details in the form
 				var html = `
 						<h2>Update Account</h2>
 						<form id='update_account_form'>
@@ -410,7 +508,6 @@
 			})
 		}
 		 
-		// function to make form values to json format
 		$.fn.serializeObject = function() {
 		 
 			var o = {};
