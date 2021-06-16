@@ -2,14 +2,23 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthState } from "../redux/reducers/authReducer";
 import { RootState } from "../redux/reducers/rootReducer";
+import store from "../redux/store";
 
 export default function Header() {
+  const history = useHistory();
+
   const isLoggedIn = useSelector<RootState, AuthState["isLoggedIn"]>(
     (state) => state.auth.isLoggedIn
   );
+
+  const handleLogout = () => {
+    store.dispatch({ type: "SET_TOKEN", payload: undefined });
+    history.push("/login");
+  };
 
   return (
     <Navbar bg="dark" variant="dark">
@@ -19,7 +28,9 @@ export default function Header() {
         </LinkContainer>
         <Nav className="me-auto">
           {isLoggedIn ? (
-            <></>
+            <>
+              <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+            </>
           ) : (
             <>
               <LinkContainer to="/login">
