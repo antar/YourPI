@@ -1,10 +1,10 @@
 <?php
 
-header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once '../config/core.php';  
 include_once '../config/database.php';
+include_once '../config/header.php';
 include_once '../objects/product.php';
   
 $database = new Database();

@@ -1,12 +1,12 @@
 <?php
 
-header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
 header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
   
 include_once '../config/database.php';
+include_once '../config/header.php';
 include_once '../objects/product.php';
 
 $database = new Database();
