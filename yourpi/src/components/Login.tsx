@@ -1,16 +1,19 @@
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
+import { useHistory } from "react-router";
 import { login } from "../lib/api";
 
 export default function Login() {
+  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(email, password);
+    login(email, password).then((jwt) => history.push("/"));
   };
 
   return (

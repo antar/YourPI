@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -23,6 +23,7 @@ export default function SignUp() {
           <Form.Label>Firstname</Form.Label>
           <Form.Control
             type="text"
+            placeholder="Enter firstname"
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
           />
@@ -31,6 +32,7 @@ export default function SignUp() {
           <Form.Label>Lastname</Form.Label>
           <Form.Control
             type="text"
+            placeholder="Enter lastname"
             value={lastname}
             onChange={(e) => setLastname(e.target.value)}
           />
