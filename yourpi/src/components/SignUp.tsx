@@ -2,9 +2,12 @@ import { FormEvent, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
+import useAuthTenet from "../hooks/useAuthTenet";
 import { signUp } from "../lib/api";
 
 export default function SignUp() {
+  useAuthTenet();
+
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");

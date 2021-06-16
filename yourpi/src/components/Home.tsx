@@ -1,7 +1,10 @@
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
+import useAuthProtecton from "../hooks/useAuthProtection";
 
 export default function Home() {
+  useAuthProtecton();
+
   return (
     <Container className="py-5">
       <Card className="mb-4">

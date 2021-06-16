@@ -3,9 +3,12 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router";
+import useAuthTenet from "../hooks/useAuthTenet";
 import { login } from "../lib/api";
 
 export default function Login() {
+  useAuthTenet();
+
   const history = useHistory();
 
   const [email, setEmail] = useState("");
