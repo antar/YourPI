@@ -1,10 +1,20 @@
 import axios from "axios";
+import store from "../redux/store";
 
 const API_BASE = process.env.REACT_APP_API_BASE;
 
-const instance = axios.create({ baseURL: API_BASE });
+let instance = axios.create({ baseURL: API_BASE });
 
-let jwt = null;
+// This function is called by the store to set the token to the axios instance.
+// DO NOT USE IN THIS FILE
+export const setToken = (token?: string) => {
+  instance = axios.create({
+    baseURL: API_BASE,
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  });
+};
 
 export const login = async (
   email: string,
@@ -15,8 +25,9 @@ export const login = async (
     password
   });
   if (data.jwt) {
-    jwt = data.jwt;
-    return data.jwt;
+    const { jwt } = data;
+    store.dispatch({ type: "SET_TOKEN", payload: jwt });
+    return jwt;
   }
   throw new Error("Error while logging in!");
 };
