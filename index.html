@@ -295,6 +295,7 @@
 							<div class="card-body">
 								<h5 class="card-title">An unofficial take on the YourPI.</h5>
 								<p class="card-text">This api serves as a construction kit.</p>
+								<p class="card-text"><b>Watch Out: </b>You don't have to verify yourself with a token to access the API. The user interface and the products / categories are <b>not</b> related.</p>
 								<p>The repository can be found on <a href="https://github.com/antar/REST-API">Github</a>. By default there are products and categories. These can be modified with CRUD.</p>
 								<p>The User Authentication is made with <a href="https://github.com/firebase/php-jwt">JWT.</a></p>
 							</div>
@@ -302,7 +303,39 @@
 					</div>
 					<div style="height: 30px;"></div>
 					<div class="card">
-						<div class="card-header">Usage</div>
+						<div class="card-header">Getting Started</div>
+							<div class="card-body">
+								<h5 class="card-title">Database</h5>
+								<p>Create a new Database called <b>api_db</b>.</p>
+								<p>Import each of the Importer Files at <b>/sql</b> to the Database.</p>
+								<p>Change the credentials in <b>/api/config/database.php</b> with your informations.</p>
+							</div>
+						</div>
+					</div>
+					<div style="height: 30px;"></div>
+					<div class="card">
+						<div class="card-header">Usage <b>Users</b></div>
+							<div class="card-body">
+								<h5 class="card-title">Create User</h5>
+								<img src="images/create-user.png">
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Login User</h5>
+								<img src="images/login-user.png">
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Validate Token</h5>
+								<img src="images/validate-token.png">
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">Read One Product</h5>
+								<img src="images/update-user.png">
+							</div>
+						</div>
+					</div>
+					<div style="height: 30px;"></div>
+					<div class="card">
+						<div class="card-header">Usage <b>Products / Categories</b></div>
 							<div class="card-body">
 								<h5 class="card-title">Read Products</h5>
 								<img src="images/read-products-200.jpeg">
