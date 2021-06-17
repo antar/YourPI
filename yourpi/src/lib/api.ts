@@ -36,7 +36,7 @@ export const login = async (
     store.dispatch({ type: "SET_USER", payload: auth.data });
     return jwt;
   }
-  throw new Error("Error while logging in!");
+  throw new Error(data.message || "Error while logging in!");
 };
 
 export const signUp = async (
@@ -51,7 +51,8 @@ export const signUp = async (
     email,
     password
   });
-  return res.data.message === "User was created.";
+  if (res.data.message === "User was created.") return true;
+  throw new Error(res.data.message || "An unknown error occured!");
 };
 
 export const introspect = async (): Promise<IIntrospectResponse> => {

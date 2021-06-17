@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -11,16 +12,28 @@ export default function Login() {
 
   const history = useHistory();
 
+  const [isSubmitting, setSubmitting] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(email, password).then((jwt) => history.push("/"));
+    setSubmitting(true);
+    setErrorMessage("");
+    login(email, password)
+      .then(() => history.push("/"))
+      .catch((error) =>
+        setErrorMessage(error.message || "Login failed! Please try again.")
+      )
+      .finally(() => setSubmitting(false));
   };
 
   return (
     <Container className="py-5">
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       <h1 className="mb-4">Login</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formLoginEmail">
@@ -42,7 +55,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={isSubmitting}>
           Login
         </Button>
       </Form>

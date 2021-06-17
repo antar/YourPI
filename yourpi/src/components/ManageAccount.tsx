@@ -1,4 +1,6 @@
 import { Formik, FormikHelpers } from "formik";
+import { useState } from "react";
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -7,6 +9,9 @@ import { updateUser } from "../lib/api";
 
 export default function ManageAccount() {
   const [user] = useAuthProtecton();
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const initialValues = {
     firstname: user?.firstname || "",
@@ -20,18 +25,22 @@ export default function ManageAccount() {
     { setSubmitting }: FormikHelpers<typeof initialValues>
   ) => {
     setSubmitting(true);
-    updateUser(
-      values.firstname,
-      values.lastname,
-      values.email,
-      values.password
-    ).then(() => {
-      setSubmitting(false);
-    });
+    setSuccessMessage("");
+    setErrorMessage("");
+    updateUser(values.firstname, values.lastname, values.email, values.password)
+      .then(() =>
+        setSuccessMessage("Your account has successfully been updated!")
+      )
+      .catch(() =>
+        setErrorMessage("An unknown error occured while updating your account!")
+      )
+      .finally(() => setSubmitting(false));
   };
 
   return (
     <Container className="py-5">
+      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       <h1 className="mb-4">Manage Account</h1>
       {user && (
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
