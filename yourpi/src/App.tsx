@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import ManageAccount from "./components/ManageAccount";
 import store from "./redux/store";
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
           </Route>
           <Route path="/sign-up" exact>
             <SignUp />
+          </Route>
+          <Route path="/account" exact>
+            <ManageAccount />
           </Route>
           <Route path="/" exact>
             <Home />

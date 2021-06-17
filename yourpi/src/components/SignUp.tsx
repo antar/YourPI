@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -8,6 +9,11 @@ import { signUp } from "../lib/api";
 export default function SignUp() {
   useAuthTenet();
 
+  const [isSubmitting, setSubmitting] = useState(false);
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -15,11 +21,26 @@ export default function SignUp() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signUp(firstname, lastname, email, password);
+    setSubmitting(true);
+    setSuccessMessage("");
+    setErrorMessage("");
+    signUp(firstname, lastname, email, password)
+      .then(() =>
+        setSuccessMessage("Your account has successfully been created!")
+      )
+      .catch((error) =>
+        setErrorMessage(
+          error.message ||
+            "An unknown error occured while creating your account!"
+        )
+      )
+      .finally(() => setSubmitting(false));
   };
 
   return (
     <Container className="py-5">
+      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       <h1 className="mb-4">Sign Up</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formSignUpFirstname">
@@ -29,6 +50,7 @@ export default function SignUp() {
             placeholder="Enter firstname"
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
+            autoFocus
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formSignUpLastname">
@@ -58,7 +80,7 @@ export default function SignUp() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={isSubmitting}>
           Sign Up
         </Button>
       </Form>
