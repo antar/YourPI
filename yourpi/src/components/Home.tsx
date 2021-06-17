@@ -33,16 +33,16 @@ export default function Home() {
           <Card.Text>This api serves as a construction kit.</Card.Text>
           <Card.Text>
             <b>Watch Out: </b>You don't have to verify yourself with a token to
-            access the API. The user interface and the products / categories are
+            access the API. The user interface and the products / categories are{" "}
             <b>not</b> related.
           </Card.Text>
           <Card.Text>
-            The repository can be found on
+            The repository can be found on{" "}
             <a href="https://github.com/antar/REST-API">Github</a>. By default
             there are products and categories. These can be modified with CRUD.
           </Card.Text>
           <Card.Text>
-            The User Authentication is made with
+            The User Authentication is made with{" "}
             <a href="https://github.com/firebase/php-jwt">JWT.</a>
           </Card.Text>
         </Card.Body>
