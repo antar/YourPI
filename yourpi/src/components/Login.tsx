@@ -30,6 +30,7 @@ export default function Login() {
             placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoFocus
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formLoginPassword">

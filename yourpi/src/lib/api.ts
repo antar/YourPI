@@ -65,3 +65,26 @@ export const introspect = async (): Promise<IIntrospectResponse> => {
     throw new Error("Error during introspect!");
   return res.data;
 };
+
+export const updateUser = async (
+  firstname: string,
+  lastname: string,
+  email: string,
+  password: string
+): Promise<string> => {
+  const { data } = await instance.post("/user/update_user.php", {
+    jwt: getToken(),
+    firstname,
+    lastname,
+    email,
+    password
+  });
+  if (data.jwt) {
+    const { jwt } = data;
+    store.dispatch({ type: "SET_TOKEN", payload: jwt });
+    const auth = await introspect();
+    store.dispatch({ type: "SET_USER", payload: auth.data });
+    return jwt;
+  }
+  throw new Error("Error while logging in!");
+};

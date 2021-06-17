@@ -29,6 +29,7 @@ export default function SignUp() {
             placeholder="Enter firstname"
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
+            autoFocus
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formSignUpLastname">

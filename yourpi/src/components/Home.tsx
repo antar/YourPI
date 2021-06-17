@@ -81,12 +81,11 @@ export default function Home() {
         <Card.Body>
           <Card.Title>Create User</Card.Title>
           <Card.Text>
-            <Card.Text>
-              <code>https://api.wes.fm/api/user/create_user.php</code>
-            </Card.Text>
-            <Card.Text>
-              <code>
-                {`
+            <code>https://api.wes.fm/api/user/create_user.php</code>
+          </Card.Text>
+          <Card.Text>
+            <code>
+              {`
                 {
                   "firstname" : "string",
                   "lastname" : "string",
@@ -94,8 +93,7 @@ export default function Home() {
                   "password" : "string"
                 }
               `}
-              </code>
-            </Card.Text>
+            </code>
           </Card.Text>
         </Card.Body>
       </Card>

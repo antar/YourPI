@@ -27,6 +27,9 @@ export default function Header() {
         <Nav className="me-auto">
           {authState.user ? (
             <>
+              <LinkContainer to="/account">
+                <Nav.Link>Account</Nav.Link>
+              </LinkContainer>
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             </>
           ) : (
