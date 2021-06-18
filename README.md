@@ -9,3 +9,4 @@ After Registration you can take a look https://api.wes.fm.
 ## Authors
 
 * **antar** - *Initial work* - [antar](https://github.com/antar)
+* **lyne** - *React Interface* - [lyne](https://github.com/lyne)
